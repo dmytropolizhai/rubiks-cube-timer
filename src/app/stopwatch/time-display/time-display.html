@@ -1,4 +1,5 @@
-<div class="time-display" [class.preparing]="store.isPreparing()" [class.ready]="store.isReady()"
-    [class.running]="store.isRunning()">
-    {{ formattedTime() }}
+<div class="time-display" [class.preparing]="timeDisplayStore.stopwatchStore.isPreparing()"
+    [class.ready]="timeDisplayStore.stopwatchStore.isReady()"
+    [class.running]="timeDisplayStore.stopwatchStore.isRunning()">
+    {{ timeDisplayStore.formattedTime() }}
 </div>
