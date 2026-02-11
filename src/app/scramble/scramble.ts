@@ -1,5 +1,5 @@
 import { Component, inject, signal } from "@angular/core";
-import { ScrambleGenerator } from "./scramble-generator";
+import { ScrambleStore } from "./scramble.store";
 
 const SCRAMBLE_LENGTH = 15;
 
@@ -20,7 +20,7 @@ const SCRAMBLE_LENGTH = 15;
     `
 })
 export class Scramble {
-    private readonly _scrambleGenerator = inject(ScrambleGenerator);
+    private readonly _scrambleGenerator = inject(ScrambleStore);
     public scramble = signal(this._scrambleGenerator.generateScramble(SCRAMBLE_LENGTH));
 
     public generateScramble(): void {
