@@ -11,6 +11,12 @@ const SCRAMBLE_LENGTH = 15;
         </section>
     `,
     styles: `
+        .scramble {
+            font-size: 2rem;
+            font-weight: 400;
+            letter-spacing: 0.1rem;
+            text-align: center;
+        }
     `
 })
 export class Scramble {
