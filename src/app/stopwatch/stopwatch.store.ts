@@ -9,7 +9,9 @@ import {
 import { StopwatchState } from './stopwatch.types';
 import { KeyManager } from '../keybindings/key-manager';
 
-@Injectable()
+@Injectable({
+    providedIn: 'root'
+})
 export class StopwatchStore implements OnDestroy {
     private readonly keyManager = inject(KeyManager);
 
@@ -26,6 +28,7 @@ export class StopwatchStore implements OnDestroy {
     readonly isPreparing = computed(() => this.state() === StopwatchState.PREPARING);
     readonly isReady = computed(() => this.state() === StopwatchState.READY);
     readonly isRunning = computed(() => this.state() === StopwatchState.RUNNING);
+    readonly isFinished = computed(() => this.state() === StopwatchState.FINISHED);
 
     constructor() {
         this.initializeKeyHandling();
@@ -52,6 +55,10 @@ export class StopwatchStore implements OnDestroy {
 
             if (this.isReady() && spaceReleased) {
                 this.start();
+            }
+
+            if (this.isFinished() && spaceJustPressed) {
+                this.reset();
             }
         });
     }
@@ -90,7 +97,7 @@ export class StopwatchStore implements OnDestroy {
 
         const finalTime = performance.now() - this._startTime;
         this._elapsedTime.set(finalTime);
-        this._state.set(StopwatchState.IDLE);
+        this._state.set(StopwatchState.FINISHED);
     }
 
     private clearReadyTimeout(): void {
@@ -103,6 +110,7 @@ export class StopwatchStore implements OnDestroy {
     reset(): void {
         this.stop();
         this._elapsedTime.set(0);
+        this._state.set(StopwatchState.IDLE);
     }
 
     ngOnDestroy(): void {
