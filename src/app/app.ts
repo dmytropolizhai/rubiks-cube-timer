@@ -1,10 +1,11 @@
 import { Component, signal } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { Stopwatch } from './stopwatch/stopwatch';
+import { Scramble } from "./scramble/scramble";
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, Stopwatch],
+  imports: [RouterOutlet, Stopwatch, Scramble],
   templateUrl: './app.html',
   styleUrl: './app.css'
 })
