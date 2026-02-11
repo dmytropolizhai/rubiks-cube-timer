@@ -1,0 +1,4 @@
+<div class="time-display" [class.preparing]="store.isPreparing()" [class.ready]="store.isReady()"
+    [class.running]="store.isRunning()">
+    {{ formattedTime() }}
+</div>

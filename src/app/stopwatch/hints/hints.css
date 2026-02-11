@@ -1,0 +1,33 @@
+.hints {
+    font-family: 'Inter', system-ui, sans-serif;
+    color: rgba(255, 255, 255, 0.4);
+    font-size: 1.1rem;
+    font-weight: 500;
+    letter-spacing: 0.1rem;
+    text-transform: uppercase;
+    animation: fadeIn 0.3s ease-out;
+    text-align: center;
+}
+
+.key {
+    background: rgba(255, 255, 255, 0.08);
+    padding: 0.25rem 0.5rem;
+    border-radius: 6px;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    font-family: 'Space Mono', monospace;
+    font-size: 0.9rem;
+    color: rgba(255, 255, 255, 0.8);
+    margin: 0 0.25rem;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
