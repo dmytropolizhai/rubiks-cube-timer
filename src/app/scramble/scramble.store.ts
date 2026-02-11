@@ -1,13 +1,18 @@
-import { Injectable } from "@angular/core";
+import { computed, Injectable, signal } from "@angular/core";
 
 @Injectable({
     providedIn: 'root'
 })
-export class ScrambleGenerator {
+export class ScrambleStore {
     private readonly _moves = ['R', 'L', 'U', 'D', 'F', 'B'];
     private readonly _modifiers = ['', "'", '2'];
 
+
+    private _currentScramble = signal('');
     private _generatedMoves: string[] = [];
+
+    readonly currentScramble = computed(() => this._currentScramble());
+
     /**
      * Generates a random move.
      * @returns A random move.
@@ -25,7 +30,6 @@ export class ScrambleGenerator {
     }
 
     generateScramble(length: number): string {
-        let scramble = '';
         for (let i = 0; i < length; i++) {
             let move = this.generateMove();
             let modifier = this.generateModifier();
@@ -33,7 +37,7 @@ export class ScrambleGenerator {
 
             if (this._generatedMoves.length === 0) {
                 this._generatedMoves.push(fullMove);
-                scramble += fullMove + ' ';
+                this._currentScramble.set(fullMove + ' ');
                 continue;
             }
             const previousFullMove = this._generatedMoves[this._generatedMoves.length - 1];
@@ -45,8 +49,8 @@ export class ScrambleGenerator {
             }
 
             this._generatedMoves.push(fullMove);
-            scramble += fullMove + ' ';
+            this._currentScramble.set(this._currentScramble() + fullMove + ' ');
         }
-        return scramble.trim();
+        return this._currentScramble().trim();
     }
-}
+}   
