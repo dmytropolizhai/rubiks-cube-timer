@@ -1,13 +1,12 @@
-import { Component, inject, signal } from "@angular/core";
-import { ScrambleStore } from "./scramble.store";
+import { Component, computed, inject, Input, OnChanges, signal, SimpleChanges } from "@angular/core";
+import { ScrambleGenerator } from "./scramble-generator";
 
-const SCRAMBLE_LENGTH = 15;
 
 @Component({
     selector: 'app-scramble',
     template: `
         <section class="scramble">
-            {{ scramble() }}
+            {{ currentScramble() }}
         </section>
     `,
     styles: `
@@ -19,11 +18,15 @@ const SCRAMBLE_LENGTH = 15;
         }
     `
 })
-export class Scramble {
-    private readonly _scrambleGenerator = inject(ScrambleStore);
-    public scramble = signal(this._scrambleGenerator.generateScramble(SCRAMBLE_LENGTH));
+export class Scramble implements OnChanges {
+    @Input({ required: true }) length!: number;
 
-    public generateScramble(): void {
-        this.scramble.set(this._scrambleGenerator.generateScramble(SCRAMBLE_LENGTH));
+    private readonly _scrambleGenerator = inject(ScrambleGenerator);
+
+    currentScramble = computed(() => this._scrambleGenerator.current());
+
+    ngOnChanges(changes: SimpleChanges): void {
+        this._scrambleGenerator.regenerate(this.length);
     }
+
 }
