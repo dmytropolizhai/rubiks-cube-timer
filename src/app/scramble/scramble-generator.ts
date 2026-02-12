@@ -1,17 +1,22 @@
 import { computed, Injectable, signal } from "@angular/core";
 
+/**
+ * Generates a random scramble for a 3x3x3 Rubik's Cube.
+ */
 @Injectable({
     providedIn: 'root'
 })
-export class ScrambleStore {
+export class ScrambleGenerator {
     private readonly _moves = ['R', 'L', 'U', 'D', 'F', 'B'];
     private readonly _modifiers = ['', "'", '2'];
 
-
-    private _currentScramble = signal('');
+    private _current = signal('');
     private _generatedMoves: string[] = [];
 
-    readonly currentScramble = computed(() => this._currentScramble());
+    /**
+     * The current scramble.
+     */
+    readonly current = computed(() => this._current());
 
     /**
      * Generates a random move.
@@ -29,7 +34,12 @@ export class ScrambleStore {
         return this._modifiers[Math.floor(Math.random() * this._modifiers.length)];
     }
 
-    generateScramble(length: number): string {
+    /**
+     * Generates a scramble of a given length.
+     * @param length The length of the scramble.
+     * @returns The generated scramble.
+     */
+    generate(length: number): string {
         for (let i = 0; i < length; i++) {
             let move = this.generateMove();
             let modifier = this.generateModifier();
@@ -37,7 +47,7 @@ export class ScrambleStore {
 
             if (this._generatedMoves.length === 0) {
                 this._generatedMoves.push(fullMove);
-                this._currentScramble.set(fullMove + ' ');
+                this._current.set(fullMove + ' ');
                 continue;
             }
             const previousFullMove = this._generatedMoves[this._generatedMoves.length - 1];
@@ -49,8 +59,20 @@ export class ScrambleStore {
             }
 
             this._generatedMoves.push(fullMove);
-            this._currentScramble.set(this._currentScramble() + fullMove + ' ');
+            this._current.set(this._current() + fullMove + ' ');
         }
-        return this._currentScramble().trim();
+        return this._current().trim();
     }
-}   
+
+    /**
+     * Generates a new scramble.
+     * @param length The length of the scramble.
+     * @returns The new scramble.
+     */
+    regenerate(length: number): string {
+        this._current.set('');
+        this._generatedMoves = [];
+
+        return this.generate(length);
+    }
+}
