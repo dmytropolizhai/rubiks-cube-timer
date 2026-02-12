@@ -4,7 +4,7 @@ import { TimeDisplay } from "./time-display/time-display";
 import { Hints } from "./hints/hints";
 import { SolvingStore } from "../solving/solving.store";
 import { StopwatchState } from "./stopwatch.types";
-import { ScrambleStore } from "../scramble/scramble.store";
+import { ScrambleGenerator } from "../scramble/scramble-generator";
 import { TimeDisplayStore } from "./time-display/time-display.store";
 
 @Component({
@@ -18,7 +18,7 @@ import { TimeDisplayStore } from "./time-display/time-display.store";
 export class Stopwatch {
     private readonly stopwatchStore = inject(StopwatchStore);
     private readonly solvingStore = inject(SolvingStore);
-    private readonly scrambleStore = inject(ScrambleStore);
+    private readonly scrambleGenerator = inject(ScrambleGenerator);
     private readonly timeDisplayStore = inject(TimeDisplayStore);
 
     constructor() {
@@ -28,8 +28,9 @@ export class Stopwatch {
                     id: crypto.randomUUID(),
                     timeMs: this.stopwatchStore.elapsed(),
                     formattedTime: this.timeDisplayStore.formattedTime(),
-                    scramble: this.scrambleStore.currentScramble(),
+                    scramble: this.scrambleGenerator.current(),
                 });
+                this.scrambleGenerator.regenerate(20);
             }
         });
     }
