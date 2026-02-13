@@ -1,5 +1,5 @@
 import { Component, inject } from "@angular/core";
-import { SolveStatistics } from "./statistics";
+import { SolveStatistics } from "./statistics.service";
 
 
 @Component({

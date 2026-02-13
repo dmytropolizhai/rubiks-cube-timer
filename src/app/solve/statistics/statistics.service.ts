@@ -1,5 +1,5 @@
 import { Injectable, inject } from "@angular/core";
-import { SolveHistory } from "../history/solve-history";
+import { SolveHistory } from "../history/solve-history.service";
 import { Solve } from "../types";
 
 @Injectable({

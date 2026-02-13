@@ -1,5 +1,5 @@
 import { Component, inject } from "@angular/core";
-import { SolveHistory } from "./solve-history";
+import { SolveHistory } from "./solve-history.service";
 
 
 @Component({
