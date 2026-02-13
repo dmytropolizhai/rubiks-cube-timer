@@ -1,0 +1,23 @@
+.solve-history {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.solve-history__list {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.solve-history__item {
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
+}
+
+.solve-history__item-time {
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
+}
