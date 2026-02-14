@@ -5,3 +5,5 @@ export type Command = {
     action: (event: Omit<KeyboardEvent, "preventDefault">) => void;
     preventDefault?: boolean;
 }
+
+export type CommandMap = Partial<Record<Key, Command>>

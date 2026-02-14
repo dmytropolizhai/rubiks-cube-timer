@@ -3,6 +3,7 @@ import { DOCUMENT } from "@angular/common";
 import { fromEvent } from "rxjs";
 import { takeUntilDestroyed } from "@angular/core/rxjs-interop";
 import { CommandStore } from "./command/command.store";
+import { CommandMap } from "./types";
 
 
 @Injectable({
@@ -31,6 +32,19 @@ export class KeyManager {
 
                 command.action(event);
             });
+    }
+
+    register(commands: CommandMap) {
+        this._commandStore.commands = {
+            ...this._commandStore.commands,
+            ...commands
+        };
+
+        return () => {
+            const updated = { ...this._commandStore.commands };
+            Object.keys(commands).forEach(key => delete updated[key]);
+            this._commandStore.commands = updated;
+        };
     }
 
     private getKeyIdentifier(event: KeyboardEvent): string {
