@@ -1,5 +1,5 @@
 import { Injectable, signal } from "@angular/core";
-import { Key, Command } from "./types";
+import { Key, Command } from "../types";
 
 type CommandMap = Partial<Record<Key, Command>>
 

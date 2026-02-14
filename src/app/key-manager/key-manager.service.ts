@@ -2,7 +2,7 @@ import { Injectable, inject, DestroyRef } from "@angular/core";
 import { DOCUMENT } from "@angular/common";
 import { fromEvent } from "rxjs";
 import { takeUntilDestroyed } from "@angular/core/rxjs-interop";
-import { CommandStore } from "./command.store";
+import { CommandStore } from "./command/command.store";
 
 
 @Injectable({
