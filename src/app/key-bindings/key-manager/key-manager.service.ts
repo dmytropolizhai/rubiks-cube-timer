@@ -4,6 +4,7 @@ import { fromEvent } from "rxjs";
 import { takeUntilDestroyed } from "@angular/core/rxjs-interop";
 import { CommandStore } from "./command/command.store";
 import { CommandMap } from "./types";
+import { KeyIdentifier } from "./key-identifier";
 
 
 @Injectable({
@@ -14,14 +15,15 @@ export class KeyManager {
     private readonly _destroyRef = inject(DestroyRef);
     private readonly _document = inject(DOCUMENT);
 
-
     constructor() {
         fromEvent<KeyboardEvent>(this._document, "keydown")
             .pipe(takeUntilDestroyed(this._destroyRef))
             .subscribe(event => {
                 if (event.repeat) return;
 
-                const key = this.getKeyIdentifier(event);
+                const keyIdentifier = new KeyIdentifier(event);
+                
+                const key = keyIdentifier.toString();
                 const command = this._commandStore.commands[key];
 
                 if (!command) return;
@@ -29,7 +31,6 @@ export class KeyManager {
                 if (command.preventDefault) {
                     event.preventDefault();
                 }
-
                 command.action(event);
             });
     }
@@ -47,16 +48,4 @@ export class KeyManager {
         };
     }
 
-    private getKeyIdentifier(event: KeyboardEvent): string {
-        const keys = [];
-
-        if (event.ctrlKey) keys.push("ctrl");
-        if (event.shiftKey) keys.push("shift");
-        if (event.altKey) keys.push("alt");
-        if (event.metaKey) keys.push("meta");
-
-        keys.push(event.key.toLowerCase());
-
-        return keys.join("+");
-    }
 }
