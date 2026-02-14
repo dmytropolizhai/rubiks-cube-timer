@@ -1,59 +1,58 @@
-# RubicsCubeTimer
+![DNF](./assets/images/dnf-wide.jpg)
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 21.1.3.
+**Rubic's cube timer with modern UI driven by Angular.**
 
-## Development server
+---
 
-To start a local development server, run:
+## Table of Contents
 
-```bash
-ng serve
-```
+1. About
+2. Installation
+3. Development
+4. Building for Production
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+---
 
-## Code scaffolding
+## About
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+DNF is a simple stopwatch for tracking Rubik's Cube solve times.
 
-```bash
-ng generate component component-name
-```
+---
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+## Installation
 
-```bash
-ng generate --help
-```
-
-## Building
-
-To build the project run:
+Clone the repository and install dependencies:
 
 ```bash
-ng build
+git clone https://github.com/dmytropolizhai/dnf.git
+cd dnf
+pnpm install
 ```
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+Make sure you have pnpm installed globally:
 
-## Running unit tests
+npm install -g pnpm
 
-To execute unit tests with the [Vitest](https://vitest.dev/) test runner, use the following command:
+---
+
+## Development
+
+Run the development server with live reload:
 
 ```bash
-ng test
+pnpm start
 ```
 
-## Running end-to-end tests
+Open your browser at `http://localhost:4200` to see the app.
 
-For end-to-end (e2e) testing, run:
+---
+
+## Building for Production
+
+Build the project for production:
 
 ```bash
-ng e2e
+pnpm build
 ```
 
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+The compiled output will be in the `dist/` folder, ready for deployment to GitHub Pages or any static hosting service.
