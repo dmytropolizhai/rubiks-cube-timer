@@ -1,4 +1,4 @@
-import { Key, Modifier } from "./types";
+import { Key } from "./types";
 
 /**
  * Identifies keys pressed in a KeyboardEvent.
@@ -6,8 +6,8 @@ import { Key, Modifier } from "./types";
 export class KeyIdentifier {
     private _keys: Key[] = [];
 
-    private static readonly MODIFIERS = new Map<Modifier, keyof KeyboardEvent>([
-        ["ctrl", "ctrlKey"],
+    private static readonly MODIFIERS = new Map<Key, keyof KeyboardEvent>([
+        ["control", "ctrlKey"],
         ["shift", "shiftKey"],
         ["alt", "altKey"],
         ["meta", "metaKey"],
@@ -19,7 +19,6 @@ export class KeyIdentifier {
                 this._keys.push(name);
             }
         });
-
         const mainKey = event.key.toLowerCase().replace(" ", "space");
 
         if (![...KeyIdentifier.MODIFIERS.keys()].includes(mainKey)) {

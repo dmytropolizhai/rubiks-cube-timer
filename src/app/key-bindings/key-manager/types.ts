@@ -1,4 +1,5 @@
-export type Key = "space" | "r" | (string & {});
+export type Key = "space" | "r" | "control" | "shift" | "alt" | "meta" | (string & {});
+
 
 export type Command = {
     description?: string;
