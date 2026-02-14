@@ -6,6 +6,14 @@ import { CommandMap } from "./key-manager/types";
  * Provide key bindings for the application. 
  * Should be called in the constructor of the component that wants to use key bindings.
  * 
+ * To provide multiple key bindings, use the + operator:
+ * ```typescript
+ * provideKeyBindings({
+ *   "control+r": {
+ *      ...
+ *   }
+ * });
+ * ```
  * @param commands {CommandMap}
  */
 export function provideKeyBindings(commands: CommandMap) {
