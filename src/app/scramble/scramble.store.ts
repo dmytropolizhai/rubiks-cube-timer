@@ -1,5 +1,5 @@
 import { computed, Injectable, signal } from "@angular/core";
-import { ScrambleGenerator } from "../utils/scramble-generator";
+import { ScrambleGenerator } from "./scramble-generator";
 
 
 @Injectable({

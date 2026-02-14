@@ -1,5 +1,5 @@
 import { Component, inject } from "@angular/core";
-import { ScrambleStore } from "./service/scramble.store";
+import { ScrambleStore } from "./scramble.store";
 
 @Component({
     selector: 'app-scramble',
