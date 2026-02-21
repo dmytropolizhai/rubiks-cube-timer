@@ -1,54 +1,53 @@
-import { Injectable, inject } from "@angular/core";
+import { Injectable, inject, computed } from "@angular/core";
 import { SolveHistoryService } from "../history/solve-history.service";
-import { Solve } from "../types";
 
 @Injectable({
     providedIn: 'root'
 })
 export class SolveStatistics {
     private _history = inject(SolveHistoryService);
-    private _solves = this._history.solves();
+    private _solves = this._history.solves;
 
+    bestSolve = computed(() => {
+        const solves = this._solves();
+        if (solves.length < 2) return null;
 
-    getWorstSolve(): Solve {
-        return this._solves.reduce((prev, current) => prev.elapsedTime > current.elapsedTime ? prev : current);
-    }
+        return solves.reduce((prev, current) =>
+            prev.elapsedTime < current.elapsedTime ? prev : current
+        );
+    });
 
-    getBestSolve(): Solve {
-        return this._solves.reduce((prev, current) => prev.elapsedTime < current.elapsedTime ? prev : current);
-    }
+    worstSolve = computed(() => {
+        const solves = this._solves();
+        if (solves.length < 2) return null;
 
-    /**
-     * To calculate the Ao5, we need to take the best 5 solves remove worst and best solve from the history and calculate the average.
-     * TODO: Change logic to calculate Ao5 from the last 5 solves.
-     */
-    getAo5(): number {
-        if (this._solves.length < 5) {
-            return 0;
-        }
-        const bestSolve = this.getBestSolve();
-        const worstSolve = this.getWorstSolve();
+        return solves.reduce((prev, current) =>
+            prev.elapsedTime > current.elapsedTime ? prev : current
+        );
+    });
 
-        const solves = this._solves.filter(solve => solve.id !== bestSolve.id && solve.id !== worstSolve.id);
-        const sum = solves.map(solve => solve.elapsedTime).reduce((prev, current) => prev + current);
+    ao5 = computed(() => {
+        const solves = this._solves();
+        if (solves.length < 5) return null;
 
-        return sum / solves.length;
-    }
+        const last5 = solves.slice(-5);
+        const sorted = [...last5].sort((a, b) => a.elapsedTime - b.elapsedTime);
+        const trimmed = sorted.slice(1, -1); // remove best + worst
+        const sum = trimmed.reduce((acc, s) => acc + s.elapsedTime, 0);
 
-    /**
-     * To calculate the Ao12, we need to take the best 12 solves remove worst and best solve from the history and calculate the average.
-     * TODO: Change logic to calculate Ao12 from the last 12 solves.
-     */
-    getAo12(): number {
-        if (this._solves.length < 12) {
-            return 0;
-        }
-        const bestSolve = this.getBestSolve();
-        const worstSolve = this.getWorstSolve();
+        return sum / trimmed.length;
+    });
 
-        const solves = this._solves.filter(solve => solve.id !== bestSolve.id && solve.id !== worstSolve.id);
-        const sum = solves.map(solve => solve.elapsedTime).reduce((prev, current) => prev + current);
+    ao12 = computed(() => {
+        const solves = this._solves();
+        if (solves.length < 12) return null;
 
-        return sum / solves.length;
-    }
+        const last12 = solves.slice(-12);
+        const sorted = [...last12].sort((a, b) => a.elapsedTime - b.elapsedTime);
+        const trimmed = sorted.slice(1, -1);
+        const sum = trimmed.reduce((acc, s) => acc + s.elapsedTime, 0);
+
+        return sum / trimmed.length;
+    });
+
 }

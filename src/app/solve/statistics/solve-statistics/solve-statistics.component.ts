@@ -1,4 +1,4 @@
-import { Component, inject } from "@angular/core";
+import { Component, computed, inject } from "@angular/core";
 import { SolveStatistics } from "../statistics.service";
 
 
@@ -7,7 +7,7 @@ import { SolveStatistics } from "../statistics.service";
     template: `
         <div class="solve-statistics">
             <ul class="solve-statistics__list">
-                @for (statistic of statisticsList; track statistic.label) {
+                @for (statistic of statisticsList(); track statistic.label) {
                     <li class="solve-statistics__item">
                         <p class="solve-statistics__item__label">{{ statistic.label }}</p>
                         <span class="solve-statistics__item__value">{{ statistic.value }}</span>
@@ -21,26 +21,22 @@ import { SolveStatistics } from "../statistics.service";
 export class SolveStatisticsComponent {
     private _statistics = inject(SolveStatistics);
 
-    protected statisticsList = [
-        { label: 'Best', value: this.best },
-        { label: 'Worst', value: this.worst },
-        { label: 'Ao5', value: this.ao5 },
-        { label: 'Ao12', value: this.ao12 }
-    ]
-
-    get best() {
-        return this._statistics.getBestSolve().time || 0;
-    }
-
-    get worst() {
-        return this._statistics.getWorstSolve().time || 0;
-    }
-
-    get ao5() {
-        return this._statistics.getAo5() || 0;
-    }
-
-    get ao12() {
-        return this._statistics.getAo12() || 0;
-    }
+    protected statisticsList = computed(() => [
+        {
+            label: 'Best',
+            value: this._statistics.bestSolve()?.elapsedTime.toFixed(2) ?? '0.00'
+        },
+        {
+            label: 'Worst',
+            value: this._statistics.worstSolve()?.elapsedTime.toFixed(2) ?? '0.00'
+        },
+        {
+            label: 'Ao5',
+            value: this._statistics.ao5()?.toFixed(2) ?? '0.00'
+        },
+        {
+            label: 'Ao12',
+            value: this._statistics.ao12()?.toFixed(2) ?? '0.00'
+        }
+    ]);
 }
