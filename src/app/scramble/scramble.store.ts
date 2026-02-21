@@ -1,5 +1,6 @@
 import { computed, Injectable, signal } from "@angular/core";
 import { ScrambleGenerator } from "./scramble-generator";
+import { Scramble } from "./types";
 
 
 @Injectable({
@@ -8,7 +9,7 @@ import { ScrambleGenerator } from "./scramble-generator";
 export class ScrambleStore {
     private readonly _scrambleGenerator = new ScrambleGenerator();
 
-    private _currentScramble = signal('');
+    private _currentScramble = signal<Scramble>('');
     readonly currentScramble = computed(() => this._currentScramble());
 
     constructor() {

@@ -1,5 +1,1 @@
-export type Scramble = {
-    id: string;
-    moves: string[];
-    timestamp: Date;
-}
+export type Scramble = string;
