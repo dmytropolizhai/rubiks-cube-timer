@@ -15,7 +15,7 @@ import { StopwatchService } from "./stopwatch.service";
             <stopwatch-hints />
         </section>
     `,
-    styleUrl: "./stopwatch.css",
+    styleUrl: "./stopwatch.component.css",
     imports: [StopwatchHintsComponent, StopwatchTimeComponent]
 })
 export class StopwatchComponent {
@@ -32,11 +32,6 @@ export class StopwatchComponent {
                     stop: () => this.handleRelease(),
                     cancel: () => this.handleRelease()
                 },
-                preventDefault: true
-            },
-            "control+r": {
-                action: () => this._stopwatch.reset(),
-                description: "Reset the stopwatch",
                 preventDefault: true
             }
         })
