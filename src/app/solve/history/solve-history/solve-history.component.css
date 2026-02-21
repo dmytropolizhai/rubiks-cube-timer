@@ -1,23 +1,71 @@
 .solve-history {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
+    font-family: 'Inter', system-ui, sans-serif;
+    animation: fadeIn 0.3s ease-out;
+    text-align: center;
+    margin-top: 1.5rem;
+}
+
+.solve-history__title {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.7);
+    margin-bottom: 1rem;
+    letter-spacing: 0.05rem;
 }
 
 .solve-history__list {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
+    list-style: none;
+    padding: 0;
+    margin: 0;
 }
 
 .solve-history__item {
+    background: var(--background-color);
+    border: 1px solid var(--accent-color);
+    border-radius: 8px;
+    padding: 0.75rem 1rem;
+    margin: 0.5rem 0;
     display: flex;
-    flex-direction: row;
-    gap: 1rem;
+    justify-content: center;
 }
 
-.solve-history__item-time {
-    display: flex;
-    flex-direction: row;
-    gap: 1rem;
+.solve-entry {
+    display: grid;
+    grid-template-columns: max-content 1fr;
+    gap: 0.5rem 1rem;
+    align-items: center;
+    width: 100%;
+}
+
+.solve-entry__label {
+    font-size: 0.75rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.08rem;
+    color: rgba(255, 255, 255, 0.4);
+}
+
+.solve-entry__value {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.95rem;
+    color: white;
+    word-break: break-word;
+}
+
+.solve-entry__scramble {
+    font-size: 0.85rem;
+    color: rgba(255, 255, 255, 0.6);
+}
+
+/* Reuse fadeIn animation from your hints */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
