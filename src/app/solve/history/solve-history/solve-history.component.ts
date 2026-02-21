@@ -1,5 +1,5 @@
 import { Component, inject } from "@angular/core";
-import { SolveHistory } from "../solve-history.service";
+import { SolveHistoryService } from "../solve-history.service";
 
 
 @Component({
@@ -7,9 +7,11 @@ import { SolveHistory } from "../solve-history.service";
     template: `
         <section class="solve-history">
             <ul class="solve-history__list">
-                @for (solve of solves; track solve.id) {
+                @for (solve of solves(); track solve.id) {
                     <li class="solve-history__item">
-                        <span class="solve-history__item-time">{{ solve.time }}</span>
+                        <span class="solve-history__item-time">{{ solve.elapsedTime }}</span>
+                        <span class="solve-history__item-date">{{ solve.date }}</span>
+                        <span class="solve-history__item-scramble">{{ solve.scramble }}</span>
                     </li>
                 }
             </ul>
@@ -18,7 +20,7 @@ import { SolveHistory } from "../solve-history.service";
     styleUrl: './solve-history.component.css',
 })
 export class SolveHistoryComponent {
-    private _history = inject(SolveHistory);
+    private _history = inject(SolveHistoryService);
 
-    protected solves = this._history.getAll();
+    protected solves = this._history.solves;
 }

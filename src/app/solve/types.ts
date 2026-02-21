@@ -1,8 +1,8 @@
 import { Scramble } from "../scramble/types";
 
 export type Solve = {
-    id: string;
+    id: number;
     scramble: Scramble;
-    time: number;
+    elapsedTime: number;
     date: Date;
 }

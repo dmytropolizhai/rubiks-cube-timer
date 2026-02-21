@@ -1,21 +1,21 @@
 import { Injectable, inject } from "@angular/core";
-import { SolveHistory } from "../history/solve-history.service";
+import { SolveHistoryService } from "../history/solve-history.service";
 import { Solve } from "../types";
 
 @Injectable({
     providedIn: 'root'
 })
 export class SolveStatistics {
-    private _history = inject(SolveHistory);
-    private _solves = this._history.getAll();
+    private _history = inject(SolveHistoryService);
+    private _solves = this._history.solves();
 
 
     getWorstSolve(): Solve {
-        return this._solves.reduce((prev, current) => prev.time > current.time ? prev : current);
+        return this._solves.reduce((prev, current) => prev.elapsedTime > current.elapsedTime ? prev : current);
     }
 
     getBestSolve(): Solve {
-        return this._solves.reduce((prev, current) => prev.time < current.time ? prev : current);
+        return this._solves.reduce((prev, current) => prev.elapsedTime < current.elapsedTime ? prev : current);
     }
 
     /**
@@ -30,7 +30,7 @@ export class SolveStatistics {
         const worstSolve = this.getWorstSolve();
 
         const solves = this._solves.filter(solve => solve.id !== bestSolve.id && solve.id !== worstSolve.id);
-        const sum = solves.map(solve => solve.time).reduce((prev, current) => prev + current);
+        const sum = solves.map(solve => solve.elapsedTime).reduce((prev, current) => prev + current);
 
         return sum / solves.length;
     }
@@ -47,7 +47,7 @@ export class SolveStatistics {
         const worstSolve = this.getWorstSolve();
 
         const solves = this._solves.filter(solve => solve.id !== bestSolve.id && solve.id !== worstSolve.id);
-        const sum = solves.map(solve => solve.time).reduce((prev, current) => prev + current);
+        const sum = solves.map(solve => solve.elapsedTime).reduce((prev, current) => prev + current);
 
         return sum / solves.length;
     }
