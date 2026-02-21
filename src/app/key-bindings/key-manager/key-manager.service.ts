@@ -5,6 +5,7 @@ import { takeUntilDestroyed } from "@angular/core/rxjs-interop";
 import { CommandStore } from "./command/command.store";
 import { CommandMap } from "./types";
 import { KeyIdentifier } from "./key-identifier";
+import { isTapAction } from "./types/guards";
 
 
 @Injectable({
@@ -19,10 +20,7 @@ export class KeyManager {
         fromEvent<KeyboardEvent>(this._document, "keydown")
             .pipe(takeUntilDestroyed(this._destroyRef))
             .subscribe(event => {
-                if (event.repeat) return;
-
                 const keyIdentifier = new KeyIdentifier(event);
-                
                 const key = keyIdentifier.toString();
                 const command = this._commandStore.commands[key];
 
@@ -31,7 +29,36 @@ export class KeyManager {
                 if (command.preventDefault) {
                     event.preventDefault();
                 }
-                command.action(event);
+
+                if (event.repeat) return;
+
+
+                const action = command.action;
+                if (isTapAction(action)) {
+                    action(event);
+                } else {
+                    action.immediate?.(event);
+
+                    let started = false;
+                    const timeout = setTimeout(() => {
+                        started = true;
+                        action.start?.(event);
+                    }, action.duration);
+
+                    const keyup$ = fromEvent<KeyboardEvent>(this._document, "keyup")
+                        .pipe(takeUntilDestroyed(this._destroyRef))
+                        .subscribe(e => {
+                            if (new KeyIdentifier(e).toString() === key) {
+                                clearTimeout(timeout);
+                                if (started) {
+                                    action.stop?.(e);
+                                } else {
+                                    action.cancel?.(e);
+                                }
+                                keyup$.unsubscribe();
+                            }
+                        });
+                }
             });
     }
 
