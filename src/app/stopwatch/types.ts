@@ -1,0 +1,1 @@
+export type StopwatchState = "idle" | "preparing" | "ready" | "running" | "finished";
