@@ -5,13 +5,18 @@ import { Solve } from "../types";
     providedIn: 'root'
 })
 export class SolveHistoryService {
-    private solves = signal<Solve[]>([]);
+    private _solves = signal<Solve[]>([]);
+    solves = this._solves.asReadonly();
 
-    addSolve(solve: Solve) {
-        this.solves.update((solves) => [...solves, solve]);
+    addSolve(solve: Omit<Solve, 'id'>) {
+        const newSolve: Solve = {
+            id: this._solves().length + 1,
+            ...solve
+        };
+
+        console.log(newSolve);
+
+        this._solves.update((solves) => [...solves, newSolve]);
     }
 
-    getAll() {
-        return this.solves();
-    }
 }
