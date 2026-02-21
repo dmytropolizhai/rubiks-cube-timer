@@ -4,13 +4,13 @@ import { Solve } from "../types";
 @Injectable({
     providedIn: 'root'
 })
-export class SolveHistory {
+export class SolveHistoryService {
     private solves = signal<Solve[]>([]);
 
     addSolve(solve: Solve) {
         this.solves.update((solves) => [...solves, solve]);
     }
-    
+
     getAll() {
         return this.solves();
     }
