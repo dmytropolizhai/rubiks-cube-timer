@@ -14,8 +14,6 @@ export class SolveHistoryService {
             ...solve
         };
 
-        console.log(newSolve);
-
         this._solves.update((solves) => [...solves, newSolve]);
     }
 
