@@ -6,3 +6,18 @@
     padding: 4rem;
     gap: 2rem;
 }
+
+.stopwatch-time {
+    font-size: 8rem;
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+    transition: color 0.1s ease;
+}
+
+.stopwatch-time.preparing {
+    color: #ef4444;
+}
+
+.stopwatch-time.ready {
+    color: #22c55e;
+}
