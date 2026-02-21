@@ -14,12 +14,16 @@ export class KeyIdentifier {
     ]);
 
     constructor(event: KeyboardEvent) {
+        const isKeyUp = event.type === 'keyup';
+        const mainKey = event.key.toLowerCase().replace(' ', 'space');
+
         KeyIdentifier.MODIFIERS.forEach((prop, name) => {
-            if (event[prop]) {
+            // On keyup of a modifier key, the corresponding property (e.g. ctrlKey) might already be false.
+            // We include the modifier if the property is true, OR if this IS the modifier key that was just released.
+            if (event[prop] || (isKeyUp && mainKey === name)) {
                 this._keys.push(name);
             }
         });
-        const mainKey = event.key.toLowerCase().replace(" ", "space");
 
         if (![...KeyIdentifier.MODIFIERS.keys()].includes(mainKey)) {
             this._keys.push(mainKey);
