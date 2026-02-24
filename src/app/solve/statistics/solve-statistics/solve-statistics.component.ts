@@ -24,19 +24,19 @@ export class SolveStatisticsComponent {
     protected statisticsList = computed(() => [
         {
             label: 'Best',
-            value: this._statistics.bestSolve()?.elapsedTime.toFixed(2) ?? '0.00'
+            value: this._statistics.bestSolve()?.formattedTime ?? '0.00'
         },
         {
             label: 'Worst',
-            value: this._statistics.worstSolve()?.elapsedTime.toFixed(2) ?? '0.00'
+            value: this._statistics.worstSolve()?.formattedTime ?? '0.00'
         },
         {
             label: 'Ao5',
-            value: this._statistics.ao5()?.toFixed(2) ?? '0.00'
+            value: this._statistics.ao5()?.formattedTime ?? '0.00'
         },
         {
             label: 'Ao12',
-            value: this._statistics.ao12()?.toFixed(2) ?? '0.00'
+            value: this._statistics.ao12()?.formattedTime ?? '0.00'
         }
     ]);
 }

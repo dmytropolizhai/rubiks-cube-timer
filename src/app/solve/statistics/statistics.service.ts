@@ -1,53 +1,77 @@
 import { Injectable, inject, computed } from "@angular/core";
 import { SolveHistoryService } from "../history/solve-history.service";
+import { Solve } from "../types";
 
 @Injectable({
-    providedIn: 'root'
+    providedIn: "root"
 })
 export class SolveStatistics {
+
     private _history = inject(SolveHistoryService);
     private _solves = this._history.solves;
 
+    private isDNF(s: Solve): boolean {
+        return s.penalty === 'DNF';
+    }
+
+    private isPlus2(s: Solve): boolean {
+        return s.penalty === '+2';
+    }
+
+    private wcaTime(s: Solve): number {
+        if (this.isDNF(s)) return Number.POSITIVE_INFINITY;
+        return s.elapsedTime + (this.isPlus2(s) ? 2000 : 0);
+    }
+
+    private wcaAverage(n: number): Solve | null {
+        const solves = this._solves();
+        if (solves.length < n) return null;
+
+        const lastN = solves.slice(-n);
+        const dnfCount = lastN.filter(s => this.isDNF(s)).length;
+
+        if (dnfCount >= 2) {
+            return {
+                elapsedTime: 0,
+                penalty: 'DNF',
+                date: new Date(),
+                scramble: lastN[lastN.length - 1].scramble
+            } as Solve;
+        }
+
+        const sorted = [...lastN].sort((a, b) => this.wcaTime(a) - this.wcaTime(b));
+        const trimmed = sorted.slice(1, -1);
+        const sum = trimmed.reduce((acc, s) => acc + this.wcaTime(s), 0);
+        const avg = sum / trimmed.length;
+
+        return {
+            elapsedTime: avg,
+            penalty: 'OK',
+            date: new Date(),
+            scramble: lastN[lastN.length - 1].scramble
+        } as Solve;
+    }
+
     bestSolve = computed(() => {
         const solves = this._solves();
-        if (solves.length < 2) return null;
+        if (solves.length === 0) return null;
 
-        return solves.reduce((prev, current) =>
-            prev.elapsedTime < current.elapsedTime ? prev : current
+        const best = solves.reduce((a, b) =>
+            this.wcaTime(a) <= this.wcaTime(b) ? a : b
         );
+
+        return this.isDNF(best) ? null : best;
     });
 
     worstSolve = computed(() => {
         const solves = this._solves();
-        if (solves.length < 2) return null;
+        if (solves.length === 0) return null;
 
-        return solves.reduce((prev, current) =>
-            prev.elapsedTime > current.elapsedTime ? prev : current
+        return solves.reduce((a, b) =>
+            this.wcaTime(a) >= this.wcaTime(b) ? a : b
         );
     });
 
-    ao5 = computed(() => {
-        const solves = this._solves();
-        if (solves.length < 5) return null;
-
-        const last5 = solves.slice(-5);
-        const sorted = [...last5].sort((a, b) => a.elapsedTime - b.elapsedTime);
-        const trimmed = sorted.slice(1, -1); // remove best + worst
-        const sum = trimmed.reduce((acc, s) => acc + s.elapsedTime, 0);
-
-        return sum / trimmed.length;
-    });
-
-    ao12 = computed(() => {
-        const solves = this._solves();
-        if (solves.length < 12) return null;
-
-        const last12 = solves.slice(-12);
-        const sorted = [...last12].sort((a, b) => a.elapsedTime - b.elapsedTime);
-        const trimmed = sorted.slice(1, -1);
-        const sum = trimmed.reduce((acc, s) => acc + s.elapsedTime, 0);
-
-        return sum / trimmed.length;
-    });
-
+    ao5 = computed(() => this.wcaAverage(5));
+    ao12 = computed(() => this.wcaAverage(12));
 }
