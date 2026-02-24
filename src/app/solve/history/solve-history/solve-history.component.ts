@@ -1,6 +1,6 @@
 import { Component, inject } from "@angular/core";
 import { SolveHistoryService } from "../solve-history.service";
-
+import { DecimalPipe } from "@angular/common";
 
 @Component({
     selector: 'app-solve-history',
@@ -15,7 +15,7 @@ import { SolveHistoryService } from "../solve-history.service";
             <li class="solve-history__item">
                 <dl class="solve-entry">
                 <dt class="solve-entry__label">Time</dt>
-                <dd class="solve-entry__value">{{ solve.elapsedTime }}</dd>
+                <dd class="solve-entry__value">{{ solve.elapsedTime / 1000 | number: '1.2-2' }}</dd>
 
                 <dt class="solve-entry__label">Date</dt>
                 <dd class="solve-entry__value">{{ solve.date.toLocaleString() }}</dd>
@@ -29,6 +29,8 @@ import { SolveHistoryService } from "../solve-history.service";
         </section>
     `,
     styleUrl: './solve-history.component.css',
+    standalone: true,
+    imports: [DecimalPipe],
 })
 export class SolveHistoryComponent {
     private _history = inject(SolveHistoryService);
