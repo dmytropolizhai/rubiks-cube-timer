@@ -1,7 +1,7 @@
 .solve-history {
     font-family: 'Inter', system-ui, sans-serif;
     animation: fadeIn 0.3s ease-out;
-    text-align: center;
+    text-align: start;
     margin-top: 1.5rem;
 }
 
