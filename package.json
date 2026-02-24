@@ -1,6 +1,6 @@
 {
-  "name": "rubics-cube-timer",
-  "version": "0.0.0",
+  "name": "dnf",
+  "version": "0.0.1",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
