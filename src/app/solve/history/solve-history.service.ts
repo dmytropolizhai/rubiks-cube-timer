@@ -8,10 +8,11 @@ export class SolveHistoryService {
     private _solves = signal<Solve[]>([]);
     solves = this._solves.asReadonly();
 
-    addSolve(solve: Omit<Solve, 'id'>) {
+    addSolve(solve: Omit<Solve, 'id' | 'formattedTime'>) {
         const newSolve: Solve = {
             id: this._solves().length + 1,
-            ...solve
+            formattedTime: (solve.elapsedTime / 1000).toFixed(2),
+            ...solve,
         };
 
         this._solves.update((solves) => [...solves, newSolve]);
