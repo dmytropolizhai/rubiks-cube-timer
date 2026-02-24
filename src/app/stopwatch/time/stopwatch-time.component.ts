@@ -1,5 +1,4 @@
-import { Component, inject } from "@angular/core";
-import { DecimalPipe } from "@angular/common";
+import { Component, computed, inject } from "@angular/core";
 import { StopwatchService } from "../stopwatch.service";
 
 @Component({
@@ -8,12 +7,12 @@ import { StopwatchService } from "../stopwatch.service";
         <div class="stopwatch-time" [class.preparing]="stopwatch.isPreparing()"
             [class.ready]="stopwatch.isReady()"
             [class.running]="stopwatch.isRunning()">
-            {{ stopwatch.elapsedTime() / 1000 | number: '1.2-2' }}
+            {{ formattedTime() }}
         </div>
     `,
-    imports: [DecimalPipe],
     styleUrl: "./stopwatch-time.css"
 })
 export class StopwatchTimeComponent {
     protected readonly stopwatch = inject(StopwatchService);
+    protected readonly formattedTime = computed(() => (this.stopwatch.elapsedTime() / 1000).toFixed(2));
 }
