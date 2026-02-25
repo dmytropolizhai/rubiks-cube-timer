@@ -1,71 +1,106 @@
 .solve-history {
-    font-family: 'Inter', system-ui, sans-serif;
     animation: fadeIn 0.3s ease-out;
     text-align: start;
     margin-top: 1.5rem;
+    max-height: 80vh;
+    overflow-y: auto;
+    padding-right: 0.5rem;
+    scrollbar-width: thin;
+    scrollbar-color: var(--accent-color) transparent;
 }
 
 .solve-history__title {
     font-size: 1.2rem;
     font-weight: 600;
     color: rgba(255, 255, 255, 0.7);
-    margin-bottom: 1rem;
+    margin: 0 0 1rem 0;
     letter-spacing: 0.05rem;
+    position: sticky;
+    top: 0;
+    z-index: 2;
+    text-align: right;
+    justify-content: center;
+    padding: 0.25rem 0.75rem;
+    backdrop-filter: blur(6px);
 }
 
 .solve-history__list {
-    list-style: none;
-    padding: 0;
-    margin: 0;
+  list-style: none;
+  padding: 0;
+  margin: 0;
 }
 
 .solve-history__item {
-    background: var(--background-color);
-    border: 1px solid var(--accent-color);
-    border-radius: 8px;
-    padding: 0.75rem 1rem;
-    margin: 0.5rem 0;
-    display: flex;
-    justify-content: center;
+  background: var(--background-color);
+  border: 1px solid var(--accent-color);
+  border-radius: 8px;
+  padding: 0.75rem 1rem;
+  margin: 0.5rem 0;
+  display: flex;
+  justify-content: center;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.solve-history__item:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
 }
 
 .solve-entry {
-    display: grid;
-    grid-template-columns: max-content 1fr;
-    gap: 0.5rem 1rem;
-    align-items: center;
-    width: 100%;
+  display: grid;
+  grid-template-columns: 90px 1fr;
+  gap: 0.5rem 1rem;
+  align-items: start;
+  width: 100%;
 }
 
 .solve-entry__label {
-    font-size: 0.75rem;
-    font-weight: 500;
-    text-transform: uppercase;
-    letter-spacing: 0.08rem;
-    color: rgba(255, 255, 255, 0.4);
+  font-size: 0.75rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.08rem;
+  color: rgba(255, 255, 255, 0.4);
 }
 
 .solve-entry__value {
-    font-family: 'Space Mono', monospace;
-    font-size: 0.95rem;
-    color: white;
-    word-break: break-word;
+  font-family: 'Space Mono', monospace;
+  font-size: 0.95rem;
+  color: white;
+  word-break: break-word;
+  margin: 0;
 }
 
 .solve-entry__scramble {
-    font-size: 0.85rem;
-    color: rgba(255, 255, 255, 0.6);
+  font-size: 0.85rem;
+  color: rgba(255, 255, 255, 0.6);
+  line-height: 1.4;
 }
 
-/* Reuse fadeIn animation from your hints */
-@keyframes fadeIn {
-    from {
-        opacity: 0;
-        transform: translateY(10px);
-    }
+.solve-history::-webkit-scrollbar {
+  width: 8px;
+}
 
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
+.solve-history::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.solve-history::-webkit-scrollbar-thumb {
+  background: var(--accent-color);
+  border-radius: 10px;
+  opacity: 0.6;
+}
+
+.solve-history::-webkit-scrollbar-thumb:hover {
+  opacity: 1;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
