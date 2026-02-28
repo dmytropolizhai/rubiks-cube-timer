@@ -12,7 +12,7 @@ body {
     --background-color: rgba(255, 255, 255, 0.08);
 }
 
-.primary-button {
+.primary-container {
     background: var(--background-color);
     padding: 0.25rem 0.5rem;
     border-radius: 6px;
