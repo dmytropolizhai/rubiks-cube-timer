@@ -17,14 +17,14 @@ export class SolveHistoryService {
             Date: ${solve.date}
             Penalty: ${solve.penalty}
         `);
-        
+
         const newSolve: Solve = {
             id: this._solves().length + 1,
             formattedTime: (solve.elapsedTime / 1000).toFixed(2),
             ...solve,
         };
 
-        this._solves.update((solves) => [...solves, newSolve]);
+        this._solves.update((solves) => [newSolve, ...solves]);
     }
 
     updateCurrentSolve(solve: Partial<Solve>) {
