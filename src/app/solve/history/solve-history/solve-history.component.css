@@ -1,27 +1,27 @@
 .solve-history {
-    animation: fadeIn 0.3s ease-out;
-    text-align: start;
-    margin-top: 1.5rem;
-    max-height: 80vh;
-    overflow-y: auto;
-    padding-right: 0.5rem;
-    scrollbar-width: thin;
-    scrollbar-color: var(--accent-color) transparent;
+  animation: fadeIn 0.3s ease-out;
+  text-align: start;
+  margin-top: 1.5rem;
+  max-height: 80vh;
+  overflow-y: auto;
+  padding-right: 0.5rem;
+  scrollbar-width: thin;
+  scrollbar-color: var(--accent-color) transparent;
 }
 
 .solve-history__title {
-    font-size: 1.2rem;
-    font-weight: 600;
-    color: rgba(255, 255, 255, 0.7);
-    margin: 0 0 1rem 0;
-    letter-spacing: 0.05rem;
-    position: sticky;
-    top: 0;
-    z-index: 2;
-    text-align: right;
-    justify-content: center;
-    padding: 0.25rem 0.75rem;
-    backdrop-filter: blur(6px);
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.7);
+  margin: 0 0 1rem 0;
+  letter-spacing: 0.05rem;
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  text-align: right;
+  justify-content: center;
+  padding: 0.25rem 0.75rem;
+  backdrop-filter: blur(6px);
 }
 
 .solve-history__list {
@@ -99,6 +99,7 @@
     opacity: 0;
     transform: translateY(10px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
