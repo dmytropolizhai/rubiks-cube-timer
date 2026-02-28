@@ -11,6 +11,13 @@ export class SolveHistoryService {
     currentSolve = computed(() => this._solves()[0]);
 
     addSolve(solve: Omit<Solve, 'id' | 'formattedTime'>) {
+        console.log(`Adding to solve history: 
+            Scramble: ${solve.scramble} 
+            Elapsed time: ${solve.elapsedTime}
+            Date: ${solve.date}
+            Penalty: ${solve.penalty}
+        `);
+        
         const newSolve: Solve = {
             id: this._solves().length + 1,
             formattedTime: (solve.elapsedTime / 1000).toFixed(2),
