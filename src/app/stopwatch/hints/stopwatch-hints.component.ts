@@ -7,11 +7,11 @@ import { StopwatchService } from "../stopwatch.service";
     @if (!stopwatch.isRunning()) {
         <div class="hints">
             @if (stopwatch.isIdle()) {
-            <p>Hold <span class="key">Space</span> to start</p>
+            <p>Hold <span class="primary-container">Space</span> to start</p>
             } @else if (stopwatch.isPreparing()) {
             <p>Keep holding...</p>
             } @else if (stopwatch.isReady()) {
-            <p>Release to start!</p>
+            <p>Release <span class="primary-container">Space</span> to start!</p>
             }
         </div>
         }

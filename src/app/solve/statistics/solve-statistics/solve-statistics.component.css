@@ -29,14 +29,3 @@
     letter-spacing: 1/2px;
     text-transform: uppercase;
 }
-
-.solve-statistics__item__value {
-    display: inline-block;
-    background: var(--background-color);
-    padding: 0.25rem 0.75rem;
-    border-radius: 6px;
-    border: 1px solid var(--accent-color);
-    font-family: 'Space Mono', monospace;
-    font-size: 1rem;
-    color: white;
-}

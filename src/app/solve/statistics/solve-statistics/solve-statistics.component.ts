@@ -10,7 +10,7 @@ import { SolveStatistics } from "../statistics.service";
                 @for (statistic of statisticsList(); track statistic.label) {
                     <li class="solve-statistics__item">
                         <p class="solve-statistics__item__label">{{ statistic.label }}</p>
-                        <span class="solve-statistics__item__value">{{ statistic.value }}</span>
+                        <span class="primary-container">{{ statistic.value }}</span>
                     </li>
                 }
             </ul>
