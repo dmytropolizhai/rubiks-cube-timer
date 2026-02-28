@@ -1,6 +1,6 @@
 import { Component, inject, input } from "@angular/core";
 import { SolveHistoryService } from "../solve-history.service";
-import { PenaltySelector } from "../../penalty/penalty-selector/penalty-selector.component";
+import { PenaltySelector } from "../../penalty/penalty-selector.component";
 
 
 /**
@@ -11,13 +11,19 @@ import { PenaltySelector } from "../../penalty/penalty-selector/penalty-selector
     styleUrl: './solve-history.component.css',
     template: `
         <dt class="solve-entry__label">{{ label() }}</dt>
-        <dd class="solve-entry__value">{{ value() }}</dd>
+        <dd class="solve-entry__value">
+            @if (value()) {
+                {{ value() }}
+            } @else {
+                <ng-content />
+            }
+        </dd>
     `,
     standalone: true,
 })
 export class SolveHistoryField {
     label = input.required<string>();
-    value = input.required<string>();
+    value = input<string>();
 }
 
 /**
@@ -53,8 +59,9 @@ export class SolveHistoryTitle {
                             <solve-history-field label="Time" [value]="solve.formattedTime" />
                             <solve-history-field label="Date" [value]="solve.date.toLocaleString()" />
                             <solve-history-field label="Scramble" [value]="solve.scramble" />
-
-                            <solve-penalty-selector />
+                            <solve-history-field label="Penalty">
+                                <solve-penalty-selector />
+                            </solve-history-field>
                         </dl>
                     </li>
                 }
@@ -62,7 +69,7 @@ export class SolveHistoryTitle {
         </section>
     `,
     styleUrl: './solve-history.component.css',
-    imports: [PenaltySelector, SolveHistoryField, SolveHistoryTitle],
+    imports: [SolveHistoryField, SolveHistoryTitle, PenaltySelector],
 })
 export class SolveHistory {
     private _history = inject(SolveHistoryService);
