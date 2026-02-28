@@ -1,4 +1,4 @@
-import { Injectable, signal } from "@angular/core";
+import { computed, Injectable, signal } from "@angular/core";
 import { Solve } from "../types";
 
 @Injectable({
@@ -7,6 +7,8 @@ import { Solve } from "../types";
 export class SolveHistoryService {
     private _solves = signal<Solve[]>([]);
     solves = this._solves.asReadonly();
+
+    currentSolve = computed(() => this._solves()[0]);
 
     addSolve(solve: Omit<Solve, 'id' | 'formattedTime'>) {
         const newSolve: Solve = {
@@ -18,4 +20,11 @@ export class SolveHistoryService {
         this._solves.update((solves) => [...solves, newSolve]);
     }
 
+    updateCurrentSolve(solve: Partial<Solve>) {
+        this._solves.update((solves) => {
+            const lastSolve = solves[solves.length - 1];
+            const updatedSolve = { ...lastSolve, ...solve };
+            return [...solves.slice(0, -1), updatedSolve];
+        });
+    }
 }
