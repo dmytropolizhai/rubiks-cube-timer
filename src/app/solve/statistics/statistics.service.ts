@@ -52,22 +52,30 @@ export class SolveStatistics {
         } as Solve;
     }
 
-    bestSolve = computed(() => {
+    private filterValidSolves() {
         const solves = this._solves();
         if (solves.length < 2) return null;
 
-        const best = solves.reduce((a, b) =>
+        const validSolves = solves.filter(s => !this.isDNF(s));
+        if (validSolves.length === 0) return null;
+
+        return validSolves;
+    }
+
+    bestSolve = computed(() => {
+        const validSolves = this.filterValidSolves();
+        if (validSolves === null) return null;
+
+        return validSolves.reduce((a, b) =>
             this.wcaTime(a) <= this.wcaTime(b) ? a : b
         );
-
-        return this.isDNF(best) ? null : best;
     });
 
     worstSolve = computed(() => {
-        const solves = this._solves();
-        if (solves.length < 2) return null;
+        const validSolves = this.filterValidSolves();
+        if (validSolves === null) return null;
 
-        return solves.reduce((a, b) =>
+        return validSolves.reduce((a, b) =>
             this.wcaTime(a) >= this.wcaTime(b) ? a : b
         );
     });
