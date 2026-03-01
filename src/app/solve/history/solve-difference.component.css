@@ -4,9 +4,9 @@
 }
 
 .solve-difference.positive {
-    color: green;
+    color: var(--color-positive);
 }
 
 .solve-difference.negative {
-    color: red;
+    color: var(--color-negative);
 }

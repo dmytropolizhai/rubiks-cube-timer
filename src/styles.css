@@ -10,6 +10,8 @@ body {
 :root {
     --accent-color: rgba(255, 255, 255, 0.15);
     --background-color: rgba(255, 255, 255, 0.08);
+    --color-positive: #2ed573;
+    --color-negative: #ff4757;
 }
 
 .primary-container {

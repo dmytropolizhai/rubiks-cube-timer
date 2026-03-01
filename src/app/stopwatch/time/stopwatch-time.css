@@ -12,14 +12,14 @@
 
 /* Preparing state - usually red in cube timers */
 .stopwatch-time.preparing {
-    color: #ff4757;
+    color: var(--color-negative);
     transform: scale(0.95);
     filter: blur(1px);
 }
 
 /* Ready state - green flag to start */
 .stopwatch-time.ready {
-    color: #2ed573;
+    color: var(--color-positive);
     transform: scale(1.05);
     text-shadow: 0 0 50px rgba(46, 213, 115, 0.3);
 }
