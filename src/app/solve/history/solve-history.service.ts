@@ -8,7 +8,7 @@ export class SolveHistoryService {
     private _solves = signal<Solve[]>([]);
     solves = this._solves.asReadonly();
 
-    currentSolve = computed(() => this._solves()[0]);
+    currentSolve = computed(() => this._solves.asReadonly()()[0]);
 
     addSolve(solve: Omit<Solve, 'id' | 'formattedTime'>) {
         console.log(`Adding to solve history: 
