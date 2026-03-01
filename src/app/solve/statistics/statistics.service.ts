@@ -54,7 +54,7 @@ export class SolveStatistics {
 
     bestSolve = computed(() => {
         const solves = this._solves();
-        if (solves.length === 0) return null;
+        if (solves.length < 2) return null;
 
         const best = solves.reduce((a, b) =>
             this.wcaTime(a) <= this.wcaTime(b) ? a : b
@@ -65,7 +65,7 @@ export class SolveStatistics {
 
     worstSolve = computed(() => {
         const solves = this._solves();
-        if (solves.length === 0) return null;
+        if (solves.length < 2) return null;
 
         return solves.reduce((a, b) =>
             this.wcaTime(a) >= this.wcaTime(b) ? a : b
