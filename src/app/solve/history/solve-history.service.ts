@@ -71,4 +71,14 @@ export class SolveHistoryService {
         this._solves.update(solves => solves.filter(solve => solve.id !== id));
     }
 
+
+    differenceBetweenLastTwoSolves = computed(() => {
+        const solves = this._solves.asReadonly()();
+        if (solves.length < 2) return 0;
+
+        const lastSolve = solves[0];
+        const secondLastSolve = solves[1];
+
+        return (lastSolve.elapsedTime - secondLastSolve.elapsedTime) / 1000;
+    });
 }
