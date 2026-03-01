@@ -1,0 +1,12 @@
+.solve-difference {
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+.solve-difference.positive {
+    color: green;
+}
+
+.solve-difference.negative {
+    color: red;
+}
