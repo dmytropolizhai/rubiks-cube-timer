@@ -1,4 +1,4 @@
-import { Component, computed, inject } from "@angular/core";
+import { Component, computed, inject, input } from "@angular/core";
 import { SolveStatistics } from "../statistics.service";
 
 
@@ -19,24 +19,26 @@ import { SolveStatistics } from "../statistics.service";
     styleUrl: './solve-statistics.component.css'
 })
 export class SolveStatisticsComponent {
+    placeholder = input<string>('--');
+
     private _statistics = inject(SolveStatistics);
 
     protected statisticsList = computed(() => [
         {
             label: 'Best',
-            value: this._statistics.bestSolve()?.formattedTime ?? '0.00'
+            value: this._statistics.bestSolve()?.formattedTime ?? this.placeholder()
         },
         {
             label: 'Worst',
-            value: this._statistics.worstSolve()?.formattedTime ?? '0.00'
+            value: this._statistics.worstSolve()?.formattedTime ?? this.placeholder()
         },
         {
             label: 'Ao5',
-            value: this._statistics.ao5()?.formattedTime ?? '0.00'
+            value: this._statistics.ao5()?.formattedTime ?? this.placeholder()
         },
         {
             label: 'Ao12',
-            value: this._statistics.ao12()?.formattedTime ?? '0.00'
+            value: this._statistics.ao12()?.formattedTime ?? this.placeholder()
         }
     ]);
 }
