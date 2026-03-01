@@ -53,14 +53,17 @@ export class SolveHistoryTitle {
             <solve-history-title />
 
             <ul class="solve-history__list">
-                @for (solve of solves(); track solve.id) {
+                @for (solve of history.solves(); track solve.id) {
                     <li class="solve-history__item">
                         <dl class="solve-entry">
                             <solve-history-field label="Time" [value]="solve.formattedTime" />
                             <solve-history-field label="Date" [value]="solve.date.toLocaleString()" />
                             <solve-history-field label="Scramble" [value]="solve.scramble" />
                             <solve-history-field label="Penalty">
-                                <solve-penalty-selector />
+                                <solve-penalty-selector [solveId]="solve.id" [currentPenalty]="solve.penalty"/>
+                            </solve-history-field>
+                            <solve-history-field label="Actions">
+                                <button (click)="history.deleteSolve(solve.id)">Remove</button>
                             </solve-history-field>
                         </dl>
                     </li>
@@ -72,7 +75,5 @@ export class SolveHistoryTitle {
     imports: [SolveHistoryField, SolveHistoryTitle, PenaltySelector],
 })
 export class SolveHistory {
-    private _history = inject(SolveHistoryService);
-
-    protected solves = this._history.solves;
+    protected history = inject(SolveHistoryService);
 }

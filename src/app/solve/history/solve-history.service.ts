@@ -7,6 +7,8 @@ import { Penalty } from "../penalty";
 })
 export class SolveHistoryService {
     private _solves = signal<Solve[]>([]);
+    private _nextId = 1;
+
     solves = this._solves.asReadonly();
 
     currentSolve = computed(() => this._solves.asReadonly()()[0]);
@@ -37,7 +39,7 @@ export class SolveHistoryService {
         `);
 
         const newSolve: Solve = {
-            id: this._solves().length + 1,
+            id: this._nextId++,
             formattedTime: this.formatTime(solve.elapsedTime, solve.penalty),
             ...solve,
         };
@@ -49,27 +51,24 @@ export class SolveHistoryService {
      * Updates the penalty for the current solve.
      * @param penalty The penalty to apply to the current solve.
      */
-    updateCurrentSolvePenalty(penalty: Penalty) {
-        this._solves.update(solves => {
-            if (solves.length === 0) return solves;
-
-            const current = solves[0]
-
-            const updatedSolve = {
-                ...current,
-                penalty,
-                formattedTime: this.formatTime(current.elapsedTime, penalty)
-            }
-
-            return [updatedSolve, ...solves.slice(1)];
-        })
+    updateSolvePenalty(id: number, penalty: Penalty) {
+        this._solves.update(solves =>
+            solves.map(solve => solve.id === id
+                ? {
+                    ...solve,
+                    penalty,
+                    formattedTime: this.formatTime(solve.elapsedTime, penalty)
+                }
+                : solve
+            )
+        )
     }
 
     /**
-     * Removes the last solve from the solve history.
+     * Deletes a solve from the solve history.
      */
-    removeLastSolve() {
-        this._solves.update(solves => solves.slice(1));
+    deleteSolve(id: number) {
+        this._solves.update(solves => solves.filter(solve => solve.id !== id));
     }
 
 }
