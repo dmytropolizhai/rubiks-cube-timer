@@ -47,8 +47,9 @@
 }
 
 .solve-entry {
-  display: grid;
-  grid-template-columns: 90px 1fr;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
   gap: 0.5rem 1rem;
   align-items: start;
   width: 100%;
@@ -68,6 +69,28 @@
   color: white;
   word-break: break-word;
   margin: 0;
+}
+
+.solve-entry__penalty {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.solve-entry__main {
+  justify-content: space-between;
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+}
+
+.solve-entry__actions {
+  display: flex;
+  gap: 1rem;
+  align-items: end;
+  justify-content: end;
+  width: 100%;
 }
 
 .solve-entry__scramble {

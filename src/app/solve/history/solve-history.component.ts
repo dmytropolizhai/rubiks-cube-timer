@@ -56,15 +56,17 @@ export class SolveHistoryTitle {
                 @for (solve of history.solves(); track solve.id) {
                     <li class="solve-history__item">
                         <dl class="solve-entry">
-                            <solve-history-field label="Time" [value]="solve.formattedTime" />
+                            <div class="solve-entry__main">
+                                <solve-history-field label="Time" [value]="solve.formattedTime" />
+                                <solve-history-field class="solve-entry__penalty" label="Penalty">
+                                    <solve-penalty-selector [solveId]="solve.id" [currentPenalty]="solve.penalty"/>
+                                </solve-history-field>
+                            </div>
                             <solve-history-field label="Date" [value]="solve.date.toLocaleString()" />
                             <solve-history-field label="Scramble" [value]="solve.scramble" />
-                            <solve-history-field label="Penalty">
-                                <solve-penalty-selector [solveId]="solve.id" [currentPenalty]="solve.penalty"/>
-                            </solve-history-field>
-                            <solve-history-field label="Actions">
+                            <div class="solve-entry__actions">
                                 <button (click)="history.deleteSolve(solve.id)">Remove</button>
-                            </solve-history-field>
+                            </div>
                         </dl>
                     </li>
                 }
