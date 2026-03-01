@@ -1,6 +1,6 @@
 import { Component, inject, input } from "@angular/core";
-import { SolveHistoryService } from "../solve-history.service";
-import { PenaltySelector } from "../../penalty/penalty-selector.component";
+import { SolveHistoryService } from "./solve-history.service";
+import { PenaltySelector } from "../penalty/penalty-selector.component";
 
 
 /**
