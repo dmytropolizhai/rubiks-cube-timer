@@ -22,6 +22,5 @@ export class PenaltySelector {
         const target = event.target as HTMLSelectElement;
         const penalty = target.value as Penalty;
         this._penaltyService.setPenalty(this.solveId(), penalty);
-        console.log(this.solveId(), penalty)
     }
 }
