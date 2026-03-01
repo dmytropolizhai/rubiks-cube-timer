@@ -65,4 +65,11 @@ export class SolveHistoryService {
         })
     }
 
+    /**
+     * Removes the last solve from the solve history.
+     */
+    removeLastSolve() {
+        this._solves.update(solves => solves.slice(1));
+    }
+
 }
