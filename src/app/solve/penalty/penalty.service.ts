@@ -12,8 +12,8 @@ export class PenaltyService {
 
     penalty = this._penalty.asReadonly();
 
-    setPenalty(penalty: Penalty) {
+    setPenalty(id: number, penalty: Penalty) {
         this._penalty.set(penalty);
-        this._solveHistory.updateCurrentSolvePenalty(penalty);
+        this._solveHistory.updateSolvePenalty(id, penalty);
     }
 }
