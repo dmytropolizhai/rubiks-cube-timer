@@ -18,3 +18,10 @@ aside {
     right: 0;
     width: 300px;
 }
+
+.stopwatch-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 1rem;
+}

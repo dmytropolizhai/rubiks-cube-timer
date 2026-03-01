@@ -1,6 +1,6 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, computed, inject, signal } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { SolveHistory, SolveHistoryService } from './solve/history';
+import { SolveHistory, SolveHistoryService, SolveDifference } from './solve/history';
 import { ScrambleComponent, ScrambleStore } from "./scramble";
 import { StopwatchService, StopwatchComponent } from './stopwatch';
 import { SolveStatisticsComponent } from "./solve/statistics";
@@ -8,7 +8,7 @@ import { PenaltyService } from './solve/penalty';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, StopwatchComponent, SolveHistory, ScrambleComponent, SolveStatisticsComponent],
+  imports: [RouterOutlet, StopwatchComponent, SolveHistory, ScrambleComponent, SolveStatisticsComponent, SolveDifference],
   templateUrl: './app.html',
   styleUrl: './app.css'
 })
@@ -26,7 +26,6 @@ export class App {
       const elapsedTime = this._stopwatchService.elapsedTime();
       const penalty = this._penaltyService.penalty();
       const today = new Date();
-
 
 
       this._solveHistoryService.addSolve({
